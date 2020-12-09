@@ -1,0 +1,141 @@
+*, *::after, *:before {
+    box-sizing: border-box;
+}
+
+:root {
+    --cell-size: 100px;
+    --marker-size: calc(var(--cell-size)*.9)
+}
+
+body {
+    margin: 0;
+}
+
+.board {
+    width: 100vw;
+    height: 100vh;
+    display: grid;
+    justify-content: center;
+    align-content: center;
+    grid-template-columns: repeat(3,auto);
+}
+
+.cell {
+    background: white;
+    position: relative;
+    border: 1px solid black;
+    width: var(--cell-size);
+    height: var(--cell-size);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+}
+
+.board :first-child,
+.board :nth-child(2),
+.board :nth-child(3) {
+    border-top: 0px;
+}
+
+.board :last-child,
+.board :nth-child(8),
+.board :nth-child(7) {
+    border-bottom: 0px;
+}
+
+.board :nth-child(3n+1) {
+    border-left: 0px;
+}
+
+.board :nth-child(3n) {
+    border-right: 0px;
+}
+
+.cell.x,
+.cell.circle {
+    cursor: not-allowed;
+}
+
+.cell.x::before,
+.cell.x::after,
+.board.x .cell:not(.x):not(.circle):hover::before,
+.board.x .cell:not(.x):not(.circle):hover::after {
+    content: '';
+    position: absolute;
+    width: calc(var(--marker-size)*.15);
+    height: var(--marker-size);
+    background-color: black;
+}
+
+.board.x .cell:not(.x):not(.circle):hover::before,
+.board.x .cell:not(.x):not(.circle):hover::after {
+    background-color: lightgrey;
+    cursor: pointer;
+}
+
+.cell.x::before,
+.board.x div:hover::before {
+    transform: rotate(45deg)
+}
+
+.cell.x::after,
+.board.x div:hover::after {
+    transform: rotate(-45deg)
+}
+
+.cell.circle:before,
+.cell.circle:after, 
+.board.circle .cell:not(.x):not(.circle):hover::before,
+.board.circle .cell:not(.x):not(.circle):hover::after {
+    content: '';
+    width: var(--marker-size);
+    height: var(--marker-size);
+    border-radius: 50%;
+    background-color: black;
+    position:absolute;
+}
+
+.board.circle .cell:not(.x):not(.circle):hover::before {
+    background-color: lightgrey;
+}
+
+.cell.circle:after,
+.board.circle .cell:not(.x):not(.circle):hover::after {
+    content: '';
+    width: calc(var(--marker-size)*.7);
+    height: calc(var(--marker-size)*.7);
+    background-color: white;
+}
+
+.winning-message {
+    display: none;
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background-color: rgba(0, 0, 0, .9);
+    justify-content: center;
+    align-items: center;
+    color: white;
+    font-size: 5rem;
+    flex-direction: column;
+}
+
+.winning-message.show {
+    display: flex;
+}
+
+.winning-message button {
+    font-size: 3rem;
+    background-color: white;
+    cursor: pointer;
+    padding: .25em .5em;
+}
+
+.winning-message button:hover {
+    background-color: black;
+    color: white;
+    border-color: white;
+}
